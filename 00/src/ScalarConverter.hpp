@@ -4,6 +4,8 @@
 #include <iostream>
 #include <exception>
 #include <string>
+#include <iostream>
+#include <iomanip> 
 
 class ScalarConverter {
 	private:
@@ -15,6 +17,5 @@ class ScalarConverter {
 	private:
 		static void printChar(char *c);
 };
-
 
 #endif

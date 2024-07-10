@@ -62,3 +62,5 @@
 *.exe
 *.out
 *.app
+01/.DS_Store
+.DS_Store
