@@ -8,14 +8,13 @@
 #include <iomanip> 
 
 class ScalarConverter {
-	private:
-		ScalarConverter() {}
-
+	private:	
+		ScalarConverter();
+		~ScalarConverter();
+		ScalarConverter(const ScalarConverter&); 
+		ScalarConverter& operator=(const ScalarConverter&);
 	public:
-		static void convert(std::string input);
-	
-	private:
-		static void printChar(char *c);
+		static void convert(std::string& input);
 };
 
 #endif

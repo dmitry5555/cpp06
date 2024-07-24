@@ -1,55 +1,74 @@
 #include "ScalarConverter.hpp"
+#include <iostream>
+#include <sstream>
 
-void ScalarConverter::convert(std::string input) {
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter&) {}
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter&) {
+	return *this;
+}
+ScalarConverter::~ScalarConverter() {}
 
-	std::cout << "char: ";
-	try {
-		int num = std::stoi(input);
-		if (num >= 0 && num <= 255) {
-			char c = static_cast<char>(num);
-			if (std::isprint(c)) {
-				std::cout << c << std::endl;
-			} else {
-				std::cout << "impossible" << std::endl;
-			}
-		}
-		else {
-			std::cout << "impossible" << std::endl;
-		}
-	}
-	catch (std::exception &e) {
-		std::cout << "impossible" << std::endl;
-		// errorOccurred = true;
-	}
+void ScalarConverter::convert(std::string& input) {
+    std::istringstream str_stream(input);
 
-	std::cout << "int: ";
-	try {
-		std::cout << std::stoi(input) << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << "impossible" << std::endl;
-	}
+    if (input.length() == 1 && !std::isdigit(input[0])) {
+        char c = input[0];
+        std::cout << "char: '" << c << "'" << std::endl;
+        std::cout << "int: " << static_cast<int>(c) << std::endl;
+        std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(c) << "f" << std::endl;
+        std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(c) << std::endl;
+		return;
+    }
 
-	// float
-	std::cout << "float: ";
-	try {
-		std::cout << std::fixed << std::setprecision(1) << std::stof(input) << "f" << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << "impossible" << std::endl;
-	}
+    if (input.back() == 'f' || input.back() == 'F') {
+        input.pop_back();
+        str_stream.str(input);
+    }
 
-	// double
-	std::cout << "double: ";
-	try {
-		std::cout << std::fixed << std::setprecision(1) << std::stod(input) << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << "impossible" << std::endl;
-	}
+    double value;
+    if (str_stream >> value) {
+        if (value >= 0 && value <= 127 && std::floor(value) == value) {
+            if (std::isprint(static_cast<int>(value))) {
+                std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+            } else {
+                std::cout << "char: Non displayable" << std::endl;
+            }
+        } else {
+            std::cout << "char: impossible" << std::endl;
+        }
+    } else {
+        std::cout << "char: impossible" << std::endl;
+    }
 
+    str_stream.clear();
+    str_stream.seekg(0);
+    int int_value;
+    if (str_stream >> int_value && std::floor(value) == value) {
+        std::cout << "int: " << int_value << std::endl;
+    } else {
+        std::cout << "int: impossible" << std::endl;
+    }
+
+    str_stream.clear();
+    str_stream.seekg(0);
+    float float_value;
+    if (str_stream >> float_value) {
+        std::cout << "float: " << std::fixed << std::setprecision(1) << float_value << "f" << std::endl;
+    } else {
+        std::cout << "float: impossible" << std::endl;
+    }
+
+    str_stream.clear();
+    str_stream.seekg(0);
+    double double_value;
+    if (str_stream >> double_value) {
+        std::cout << "double: " << std::fixed << std::setprecision(1) << double_value << std::endl;
+    } else {
+        std::cout << "double: impossible" << std::endl;
+    }
 }
 
-void ScalarConverter::printChar(char *c) {
-	std::cout << "char: " << c << std::endl;
-}
+// void ScalarConverter::printChar(char *c) {
+// 	std::cout << "char: " << c << std::endl;
+// }
