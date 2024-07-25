@@ -5,6 +5,7 @@
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
+#include <cstdlib>
 
 Base * Base::generate(void) {
 	int random = rand() % 3;

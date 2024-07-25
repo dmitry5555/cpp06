@@ -1,11 +1,11 @@
 #include "Serializer.hpp"
 
-Serializer::Serializer() {}
-Serializer::~Serializer() {}
-Serializer::Serializer(const Serializer&) {}
-Serializer& Serializer::operator=(const Serializer&) {
-	return *this;
-}
+// Serializer::Serializer() {}
+// Serializer::~Serializer() {}
+// Serializer::Serializer(const Serializer&) {}
+// Serializer& Serializer::operator=(const Serializer&) {
+// 	return *this;
+// }
 
 Data* Serializer::deserialize(uintptr_t raw) {
 	Data* data = reinterpret_cast<Data*>(raw);

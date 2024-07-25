@@ -1,13 +1,14 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 ScalarConverter::ScalarConverter() {}
-ScalarConverter::ScalarConverter(const ScalarConverter&) {}
-ScalarConverter& ScalarConverter::operator=(const ScalarConverter&) {
-	return *this;
-}
 ScalarConverter::~ScalarConverter() {}
+// ScalarConverter::ScalarConverter(const ScalarConverter&) {}
+// ScalarConverter& ScalarConverter::operator=(const ScalarConverter&) {
+// 	return *this;
+// }
 
 void ScalarConverter::convert(std::string& input) {
     std::istringstream str_stream(input);
@@ -21,14 +22,14 @@ void ScalarConverter::convert(std::string& input) {
 		return;
     }
 
-    if (input.back() == 'f' || input.back() == 'F') {
-        input.pop_back();
+    if (input[input.length() - 1] == 'f' || input[input.length() - 1] == 'F') {
+        input = input.substr(0, input.length() - 1);
         str_stream.str(input);
     }
 
     double value;
     if (str_stream >> value) {
-        if (value >= 0 && value <= 127 && std::floor(value) == value) {
+        if (value >= 0 && value <= 127 && ::floor(value) == value) {
             if (std::isprint(static_cast<int>(value))) {
                 std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
             } else {
@@ -44,7 +45,7 @@ void ScalarConverter::convert(std::string& input) {
     str_stream.clear();
     str_stream.seekg(0);
     int int_value;
-    if (str_stream >> int_value && std::floor(value) == value) {
+    if (str_stream >> int_value && ::floor(value) == value) {
         std::cout << "int: " << int_value << std::endl;
     } else {
         std::cout << "int: impossible" << std::endl;
